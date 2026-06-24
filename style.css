@@ -1,37 +1,31 @@
-/*
- * Основная таблица стилей для сайта ВайбЗмест
- *
- * Используются CSS‑переменные для удобной настройки цветовой схемы
- * и размеров. Старался сохранить минимализм, много воздуха и
- * хорошую читаемость даже на мобильных устройствах.
- */
-
-/* Переменные цветов и размеров */
 :root {
-  --color-primary: #111111; /* графитовый */
-  --color-light: #ffffff; /* белый */
-  --color-accent: #00b1b4; /* фирменный бирюзовый оттенок */
-  --color-background: #f4f7fa; /* светлый серо‑голубой фон */
-  --color-card-bg: #ffffff; /* цвет карточек */
-  --color-text-dark: #2e2e2e; /* основной цвет текста */
-  --color-text-light: #f9f9f9; /* цвет текста на темном фоне */
+  --color-primary: #111111;
+  --color-light: #ffffff;
+  --color-accent: #00b1b4;
+  --color-accent-emerald: #00d9a6;
+  --color-background: #f4f7fa;
+  --color-card-bg: #ffffff;
+  --color-text-dark: #2e2e2e;
+  --color-text-light: #f9f9f9;
   --spacing: 20px;
   --max-width: 1200px;
 }
 
-/* Сброс и базовые стили */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  font-family: 'Arial', 'Helvetica', sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
   line-height: 1.6;
   background-color: var(--color-background);
   color: var(--color-text-dark);
-  scroll-behavior: smooth;
 }
 
 img {
@@ -45,7 +39,7 @@ a {
 }
 
 a:hover {
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 .container {
@@ -64,11 +58,12 @@ a:hover {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  z-index: 1000;
+  z-index: 10;
 }
 
 .navbar .logo {
   height: 40px;
+  display: block;
 }
 
 .nav-links {
@@ -88,7 +83,6 @@ a:hover {
   color: var(--color-accent);
 }
 
-/* Кнопка бургер-меню для мобильных */
 .nav-toggle {
   display: none;
   font-size: 2rem;
@@ -98,7 +92,7 @@ a:hover {
   cursor: pointer;
 }
 
-/* Герой */
+/* Первый экран */
 .hero {
   background-color: var(--color-primary);
   color: var(--color-light);
@@ -110,9 +104,52 @@ a:hover {
   padding: 120px var(--spacing) 80px;
   text-align: center;
   position: relative;
+  overflow: hidden;
 }
 
-/* New hero layout */
+/* Бирюзово-изумрудное свечение справа */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 82% 30%, rgba(0, 177, 180, 0.24), transparent 30%),
+    radial-gradient(circle at 94% 16%, rgba(0, 217, 166, 0.18), transparent 28%),
+    radial-gradient(circle at 76% 72%, rgba(0, 177, 180, 0.12), transparent 34%),
+    linear-gradient(90deg, transparent 0%, transparent 42%, rgba(0, 177, 180, 0.08) 72%, transparent 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Нейросетка справа: появляется и исчезает градиентно */
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(120deg, rgba(0, 217, 166, 0.2) 1px, transparent 1px),
+    linear-gradient(60deg, rgba(0, 177, 180, 0.14) 1px, transparent 1px),
+    radial-gradient(circle, rgba(0, 235, 210, 0.45) 1.3px, transparent 2.2px);
+  background-size: 95px 95px, 120px 120px, 75px 75px;
+  background-position: 66% 14%, 82% 8%, 72% 18%;
+  opacity: 0.38;
+  mask-image:
+    linear-gradient(90deg, transparent 0%, transparent 48%, black 72%, transparent 100%),
+    linear-gradient(180deg, transparent 0%, black 20%, black 78%, transparent 100%);
+  -webkit-mask-image:
+    linear-gradient(90deg, transparent 0%, transparent 48%, black 72%, transparent 100%),
+    linear-gradient(180deg, transparent 0%, black 20%, black 78%, transparent 100%);
+  animation: networkGlow 16s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero-content,
+.navbar {
+  position: relative;
+  z-index: 2;
+}
+
 .hero-content {
   width: min(1120px, 92vw);
   display: grid;
@@ -121,19 +158,23 @@ a:hover {
   gap: 64px;
   text-align: left;
 }
+
 .hero-logo-card {
   background: var(--color-light);
   border-radius: 28px;
   padding: 48px;
   box-shadow: 0 30px 90px rgba(0, 177, 180, 0.18);
 }
+
 .hero-logo {
   width: 100%;
   display: block;
 }
+
 .hero-text {
   max-width: 620px;
 }
+
 .eyebrow {
   color: var(--color-accent);
   font-weight: 700;
@@ -142,17 +183,20 @@ a:hover {
   font-size: 0.82rem;
   margin-bottom: 1rem;
 }
+
 .hero-content h1 {
   font-size: clamp(3rem, 6vw, 5.8rem);
   line-height: 1;
   margin-bottom: 1rem;
 }
+
 .hero-content h2 {
   font-size: clamp(1.35rem, 2vw, 2rem);
   line-height: 1.35;
   font-weight: 500;
   margin-bottom: 1.4rem;
 }
+
 .hero-content p {
   font-size: 1.05rem;
   line-height: 1.65;
@@ -160,6 +204,7 @@ a:hover {
   margin-bottom: 1.6rem;
   max-width: 620px;
 }
+
 .hero-buttons {
   display: flex;
   gap: 1rem;
@@ -167,36 +212,20 @@ a:hover {
   justify-content: flex-start;
   margin-bottom: 1rem;
 }
+
 .tagline {
   font-size: 0.92rem;
   color: rgba(255, 255, 255, 0.62);
+  margin-top: 1rem;
 }
 
-@media (max-width: 900px) {
-  .hero-content {
-    grid-template-columns: 1fr;
-    gap: 36px;
-    text-align: center;
-  }
-  .hero-logo-card {
-    padding: 28px;
-    max-width: 420px;
-    margin: 0 auto;
-  }
-  .hero-text {
-    margin: 0 auto;
-  }
-  .hero-buttons {
-    justify-content: center;
-  }
-}
-
+/* Кнопки */
 .btn {
   display: inline-block;
   padding: 0.75rem 1.5rem;
   border-radius: 30px;
   font-weight: 600;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 .btn-primary {
@@ -217,12 +246,6 @@ a:hover {
 .btn-outline:hover {
   background-color: var(--color-accent);
   color: var(--color-light);
-}
-
-.tagline {
-  font-size: 0.9rem;
-  opacity: 0.8;
-  margin-top: 1rem;
 }
 
 /* Секции */
@@ -256,7 +279,19 @@ a:hover {
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
-/* Круглые карточки для преимуществ и форматов */
+.card h3 {
+  margin-bottom: 0.75rem;
+  font-size: 1.25rem;
+  color: var(--color-primary);
+}
+
+.card p {
+  font-size: 0.95rem;
+  color: var(--color-text-dark);
+  line-height: 1.5;
+}
+
+/* Круглые карточки */
 .circle-card {
   background-color: var(--color-card-bg);
   border-radius: 50%;
@@ -270,34 +305,25 @@ a:hover {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
 .circle-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
+
 .circle-card h3 {
   margin-bottom: 0.75rem;
   font-size: 1.2rem;
   color: var(--color-primary);
 }
+
 .circle-card p {
   font-size: 0.9rem;
   color: var(--color-text-dark);
   line-height: 1.45;
 }
 
-.card h3 {
-  margin-bottom: 0.75rem;
-  font-size: 1.25rem;
-  color: var(--color-primary);
-}
-
-.card p {
-  font-size: 0.95rem;
-  color: var(--color-text-dark);
-  line-height: 1.5;
-}
-
-/* Процесс (горизонтальный шаговый процесс) */
+/* Процесс */
 .process-flow {
   display: flex;
   flex-direction: column;
@@ -305,7 +331,6 @@ a:hover {
   gap: 1rem;
 }
 
-/* Make process steps circular */
 .process-step {
   background-color: var(--color-card-bg);
   border-radius: 50%;
@@ -321,14 +346,17 @@ a:hover {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Titles inside process circles */
+.process-step:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
 .process-step h3 {
   margin-bottom: 0.5rem;
   font-size: 1.2rem;
   color: var(--color-primary);
 }
 
-/* Text inside process circles */
 .process-step p {
   color: var(--color-text-dark);
   font-size: 0.9rem;
@@ -338,12 +366,10 @@ a:hover {
 .process-arrow {
   font-size: 2rem;
   color: var(--color-accent);
-  /* default orientation: rightwards arrow */
   transform: none;
   margin: 0 10px;
 }
 
-/* Number badge for each process circle */
 .step-number {
   background-color: var(--color-accent);
   color: var(--color-light);
@@ -432,23 +458,56 @@ a:hover {
   transform: translateY(0);
 }
 
-/* Media queries для мобильных устройств */
+@keyframes networkGlow {
+  from {
+    opacity: 0.22;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0.46;
+    transform: translateY(-10px);
+  }
+}
+
+/* Адаптивность */
 @media (min-width: 768px) {
   .process-flow {
     flex-direction: row;
     justify-content: space-between;
   }
+
   .process-arrow {
-    /* keep arrow horizontal on desktop */
     transform: none;
     margin: 0 10px;
   }
+
   .process-step {
     width: calc(25% - 15px);
   }
 }
 
-/* Rotate arrow vertically on narrow screens */
+@media (max-width: 900px) {
+  .hero-content {
+    grid-template-columns: 1fr;
+    gap: 36px;
+    text-align: center;
+  }
+
+  .hero-logo-card {
+    padding: 28px;
+    max-width: 420px;
+    margin: 0 auto;
+  }
+
+  .hero-text {
+    margin: 0 auto;
+  }
+
+  .hero-buttons {
+    justify-content: center;
+  }
+}
+
 @media (max-width: 767px) {
   .process-arrow {
     transform: rotate(90deg);
@@ -469,13 +528,16 @@ a:hover {
     display: none;
     border-radius: 0 0 0 8px;
   }
+
   .nav-links li a {
     color: var(--color-light);
     font-size: 1rem;
   }
+
   .nav-toggle {
     display: block;
   }
+
   .navbar.active .nav-links {
     display: flex;
   }
@@ -485,4 +547,12 @@ a:hover {
   .cards-grid {
     grid-template-columns: 1fr;
   }
+
+  .circle-card,
+  .process-step {
+    border-radius: 28px;
+    aspect-ratio: auto;
+    min-height: 220px;
+  }
+}
 }
